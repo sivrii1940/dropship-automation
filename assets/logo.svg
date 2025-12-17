@@ -1,0 +1,190 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Premium Background Gradients -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0E27;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1E293B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0F172A;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Multi-stop Premium Blue Gradient -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Metallic Accent Gradient -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#93C5FD;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#60A5FA;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Radial Glow Effects -->
+    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:0.6" />
+      <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0" />
+    </radialGradient>
+    
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- Advanced Filter Effects -->
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="0" dy="6" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="innerGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="blur" in2="SourceAlpha" operator="in" result="inner"/>
+      <feFlood flood-color="#60A5FA" flood-opacity="0.5" result="color"/>
+      <feComposite in="color" in2="inner" operator="in" result="innerGlow"/>
+      <feComposite in="innerGlow" in2="SourceGraphic" operator="over"/>
+    </filter>
+    
+    <filter id="outerGlow">
+      <feGaussianBlur stdDeviaPremium Gradient -->
+  <circle cx="200" cy="200" r="200" fill="url(#bgGradient)"/>
+  
+  <!-- Multi-layer Glow Effects -->
+  <circle cx="200" cy="200" r="170" fill="url(#glowGradient)" opacity="0.5"/>
+  <circle cx="200" cy="200" r="140" fill="url(#glowGradient)" opacity="0.4"/>
+  <circle cx="200" cy="200" r="110" fill="url(#centerGlow)" opacity="0.6"/>
+  
+  <!-- Outer Ring Decoration -->
+  <circle cx="200" cy="200" r="195" fill="none" stroke="url(#accentGradient)" stroke-width="2" opacity="0.3"/>
+  <circle cx="200" cy="200" r="185" fill="none" stroke="url(#accentGradient)" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Main Container -->
+  <g transform="translate(200, 200)">
+    
+    <!-- Enhanced 3D Package Box with Depth -->
+    <g filter="url(#dropShadow)">
+      <!-- Shadow Base -->
+      <ellipse cx="0" cy="65" rx="70" ry="12" fill="#000000" opacity="0.3"/>
+      
+      <!-- Back face with gradient -->
+      <path d="M -65 -28 L -65 38 L 0 65 L 0 2 Z" fill="#0F172A" opacity="0.7"/>
+      <path d="M -65 -28 L -65 38 L 0 65 L 0 2 Z" fill="url(#primaryGradient)" opacity="0.2"/>
+      
+      <!-- Right face with gradient -->
+      <path d="M 0 2 L 0 65 L 65 38 L 65 -28 Z" fill="#1E293B" opacity="0.9"/>
+      <path d="M 0 2 L 0 65 L 65 38 L 65 -28 Z" fill="url(#primaryGradient)" opacity="0.3"/>
+      
+      <!-- Top face - Main focal point -->
+      <path d="M -65 -28 L 0 -55 L 65 -28 L 0 2 Z" fill="url(#primaryGradient)" filter="url(#innerGlow)"/>
+      
+      <!-- Highlight on top edge -->
+      <path d="M -60 -26 L 0 -52 L 60 -26" fill="none" stroke="#93C5FD" stroke-width="2.5" opacity="0.9" stroke-linecap="round"/>
+      
+      <!-- Premium Box Lines with glow -->
+      <line x1="-65" y1="-28" x2="0" y2="-55" stroke="url(#accentGradient)" stroke-width="2.5" opacity="0.9"/>
+      <line x1="65" y1="-28" x2="0" y2="-55" stroke="url(#accentGradient)" stroke-width="2.5" opacity="0.9"/>
+      <line x1="0" y1="-55" x2="0" y2="2" stroke="#FFFFFF" stroke-width="3" opacity="0.4"/>
+      
+      <!-- Detail Lines -->
+      <line x1="-65" y1="-28" x2="0" y2="2" stroke="#60A5FA" stroke-width="1.5" opacity="0.5"/>
+      <line x1="65" y1="-28" x2="0" y2="2" stroke="#60A5FA" stroke-width="1.5" opacity="0.5"/>
+      <line x1="0" y1="2" x2="0" y2="65" stroke="#3B82F6" stroke-width="2.5" opacity="0.6"/>
+      
+      <!-- Top surface decoration -->
+      <circle cx="0" cy="-12" r="8" fill="#FFFFFF" opacity="0.15"/>
+      <path d="M -15 -12 L 0 -20 L 15 -12" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.3
+      <path d="M -60 -25 L -60 35 L 0 60 L 0 0 Z" fill="#1E40AF" opacity="0.6"/>
+      
+      <!-- Right face -->
+      <path d="M 0 0 L 0 60 L 60 35 L 60 -25 Z" fill="#1E3A8A" opacity="0.8"/>
+      
+      <!-- Top face -->
+      <path d="M -60 -25 L 0 -50 L 60 -25 L 0 0 Z" fill="url(#primaryGradient)"/>
+      
+      <!-- Box Lines (3D Effect) -->
+      <line x1="-60" y1="-25" x2="0" y2="-50" stroke="#60A5FA" stroke-width="2" opacity="0.8"/>
+      <line x1="60" y1="-25" x2="0" y2="-50" stroke="#60A5FA" stroke-width="2" opacity="0.8"/>
+      <line x1="0" y1="-50" x2="0" y2="0" stroke="#60A5FA" stroke-width="2.5" opacity="0.9"/>
+      
+      <!-- Center Lines -->
+      <line x1="-60" y1="-25" x2="0" y2="0" stroke="#93C5FD" stroke-width="1.5" opacity="0.6"/>
+      <line x1="60" y1="-25" x2="0" y2="0" stroke="#93C5FD" stroke-width="1.5" opacity="0.6"/>
+      
+      <!-- Vertical Center Line -->
+      <line x1="0" y1="0" x2="0" y2="60" stroke="#60A5FA" stroke-width="2" opacity="0.7"/>
+    </g>
+    
+    <!-- Flow Arrows with Animation Effect -->
+    <g filter="url(#glow)">
+      <!-- Top Arrow -->
+      <g>
+        <path d="M 0 -80 L 0 -60" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M -8 -68 L 0 -60 L 8 -68" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="0" cy="-85" r="5" fill="url(#primaryGradient)" opacity="0.6"/>
+      </g>
+      
+      <!-- Right Arrow -->
+      <g>
+        <path d="M 80 0 L 65 0" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M 68 -8 L 65 0 L 68 8" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="85" cy="0" r="5" fill="url(#primaryGradient)" opacity="0.6"/>
+      </g>
+      
+      <!-- Bottom Arrow -->
+      <g>
+        <path d="M 0 80 L 0 65" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M -8 68 L 0 65 L 8 68" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="0" cy="85" r="5" fill="url(#primaryGradient)" opacity="0.6"/>
+      </g>
+      
+      <!-- Left Arrow -->
+      <g>
+        <path d="M -80 0 L -65 0" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M -68 -8 L -65 0 L -68 8" stroke="url(#accentGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="-85" cy="0" r="5" fill="url(#primaryGradient)" opacity="0.6"/>
+      </g>
+    </g>
+    
+    <!-- Decorative Circles -->
+    <circle cx="-90" cy="-90" r="3" fill="#60A5FA" opacity="0.4"/>
+    <circle cx="90" cy="-90" r="3" fill="#60A5FA" opacity="0.4"/>
+    <circle cx="-90" cy="90" r="3" fill="#60A5FA" opacity="0.4"/>
+    <circle cx="90" cy="90" r="3" fill="#60A5FA" opacity="0.4"/>
+    
+  </g>
+  
+  <!-- Premium Brand Text with Shadow -->
+  <g filter="url(#dropShadow)">
+    <text x="200" y="345" font-family="'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+          font-size="52" font-weight="900" fill="#FFFFFF" text-anchor="middle" letter-spacing="-2">
+      Drop
+    </text>
+    <text x="200" y="345" font-family="'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+          font-size="52" font-weight="900" fill="url(#accentGradient)" text-anchor="middle" letter-spacing="-2">
+      <tspan dx="-85">Drop</tspan><tspan fill="url(#primaryGradient)" dx="2">Flow</tspan>
+    </text>
+  </g>
+  
+  <!-- Premium Tagline with Line -->
+  <line x1="120" y1="360" x2="280" y2="360" stroke="url(#accentGradient)" stroke-width="1" opacity="0.3"/>
+  <text x="200" y="378" font-family="'SF Pro Display', 'Segoe UI', Arial, sans-serif" 
+        font-size="13" font-weight="600" fill="#64748B" text-anchor="middle" letter-spacing="5">
+    AUTOMATION
+  </text>
+  
+  <!-- Outer Decorative Border -->
+  <circle cx="200" cy="200" r="198" fill="none" stroke="url(#accentGradient)" stroke-width="2" opacity="0.4"/>
+  <circle cx="200" cy="200" r="194" fill="none" stroke="url(#primaryGradient)" stroke-width="1" opacity="0.2"/>
+</svg>
