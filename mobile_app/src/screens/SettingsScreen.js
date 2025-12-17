@@ -10,6 +10,7 @@ import {
   Alert,
   Modal,
   FlatList,
+  Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
@@ -676,6 +677,51 @@ export default function SettingsScreen({ onLogout }) {
         </Text>
       </TouchableOpacity>
 
+      {/* Yasal Bilgilendirme ve Linkler */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Ionicons name="document-text" size={20} color="#3b82f6" />
+          <Text style={styles.sectionTitle}>Yasal ve Bilgilendirme</Text>
+        </View>
+        
+        <TouchableOpacity 
+          style={styles.legalLink}
+          onPress={() => {
+            Linking.openURL('https://sivrii1940.github.io/dropship-automation/privacy-policy.html')
+              .catch(err => Alert.alert('Hata', 'Link açılamadı'));
+          }}
+        >
+          <Ionicons name="shield-checkmark" size={20} color="#10b981" />
+          <Text style={styles.legalLinkText}>Gizlilik Politikası</Text>
+          <Ionicons name="chevron-forward" size={18} color="#64748b" />
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.legalLink}
+          onPress={() => {
+            Linking.openURL('https://sivrii1940.github.io/dropship-automation/terms-of-service.html')
+              .catch(err => Alert.alert('Hata', 'Link açılamadı'));
+          }}
+        >
+          <Ionicons name="document-text" size={20} color="#3b82f6" />
+          <Text style={styles.legalLinkText}>Kullanım Şartları</Text>
+          <Ionicons name="chevron-forward" size={18} color="#64748b" />
+        </TouchableOpacity>
+
+        <View style={styles.legalDisclaimer}>
+          <Ionicons name="information-circle" size={18} color="#f59e0b" />
+          <Text style={styles.disclaimerText}>
+            Bu uygulamayı kullanarak Trendyol ve Shopify platformlarının kullanım şartlarına uymayı kabul edersiniz. 
+            Telif hakları ve yasal sorumluluklar kullanıcıya aittir.
+          </Text>
+        </View>
+
+        <View style={styles.appInfo}>
+          <Text style={styles.appInfoText}>Dropzy v1.0.0</Text>
+          <Text style={styles.appInfoSubtext}>© 2025 Tüm hakları saklıdır</Text>
+        </View>
+      </View>
+
       <View style={{ height: 40 }} />
 
       {/* Mağaza Ekleme/Düzenleme Modal */}
@@ -1174,5 +1220,54 @@ const styles = StyleSheet.create({
   },
   cacheButtonTextDanger: {
     color: '#ef4444',
+  },
+  // Yasal linkler
+  legalLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#2a2a3e',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 12,
+    gap: 12,
+  },
+  legalLinkText: {
+    flex: 1,
+    color: '#e2e8f0',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  legalDisclaimer: {
+    flexDirection: 'row',
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+    borderWidth: 1,
+    borderColor: '#f59e0b',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 8,
+    gap: 10,
+  },
+  disclaimerText: {
+    flex: 1,
+    color: '#fbbf24',
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  appInfo: {
+    alignItems: 'center',
+    marginTop: 24,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#252540',
+  },
+  appInfoText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  appInfoSubtext: {
+    color: '#64748b',
+    fontSize: 12,
   },
 });
