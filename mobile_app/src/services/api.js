@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CacheService from './CacheService';
 import NetworkService from './NetworkService';
 
-// API Base URL - Değiştirilebilir
-const DEFAULT_API_URL = 'http://localhost:8000';
+// API Base URL - Production
+const DEFAULT_API_URL = 'https://dolphin-app-jgjc5.ondigitalocean.app';
 
 class ApiService {
   constructor() {

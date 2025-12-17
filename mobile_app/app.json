@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Dropship Otomasyon",
-    "slug": "dropship-otomasyon",
+    "name": "Dropzy - Dropshipping Otomasyonu",
+    "slug": "dropzy-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,17 +16,30 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dropship.otomasyon"
+      "bundleIdentifier": "com.dropzy.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1a1a2e"
       },
-      "package": "com.dropship.otomasyon"
+      "package": "com.dropzy.app",
+      "versionCode": 1,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9f167fd4-b215-4ce9-a11d-6d3c7052ab92"
+      }
     }
   }
 }
