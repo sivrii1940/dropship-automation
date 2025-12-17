@@ -54,5 +54,8 @@ customtkinter==5.2.1
 python-dateutil==2.8.2
 pytz==2023.3
 
+# Cloudscraper (Trendyol için)
+cloudscraper==1.2.71
+
 # CORS
 fastapi-cors==0.0.6
