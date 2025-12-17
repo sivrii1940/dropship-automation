@@ -21,3 +21,5 @@ database/*.db-journal
 .idea
 *.md
 README.md
+main.py
+mainnew.py
