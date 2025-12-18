@@ -1,0 +1,52 @@
+- Fetching the build…\ Fetching the build…| Fetching the build…/ Fetching the build…✔ Found a matching build for the project @sivrii1940/dropzy-app
+{
+  "id": "84263726-b5cc-41a3-930a-f508eced7351",
+  "status": "ERRORED",
+  "platform": "ANDROID",
+  "error": {
+    "errorCode": "EAS_BUILD_UNKNOWN_GRADLE_ERROR",
+    "message": "Gradle build failed with unknown error. See logs for the \"Run gradlew\" phase for more information."
+  },
+  "artifacts": {},
+  "fingerprint": {
+    "id": "54b89f48-96fb-4a55-8164-89b729b41b48",
+    "hash": "11b99a8804c0be4380d433297d9ea2929e19d981"
+  },
+  "initiatingActor": {
+    "id": "13c547c2-4a14-4747-81a2-ab125f2553ab",
+    "displayName": "sivrii1940"
+  },
+  "logFiles": [
+    "https://job-logs.eascdn.net/production/84263726-b5cc-41a3-930a-f508eced7351/1766045599990-14fc9a42-1b33-488e-8a02-966b8e0afcd8.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20251218%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251218T124512Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=98b5875674964b614c19dd8065c8abd68af964b25ec15a2414399a31509bbda5cf1c8893fb3f36dd9f3c4c623cf60689f8926f966d6efeb9e651c3aefe9b374670397cbadeaa6dda6db0255551f3dc6bbb84e20d64a72319ccc118c87f0e000d1c929624c16fce167a7d3509c70c810e9768a03e1537a30c0e9979e36df69d07087ded7aad46a0665fe7176305f90f8a364f54f0b08ed3a41b17c58079888935beda10531f8f09e8dbb0d42b61d9cf2ca31b2bbdd8b7c3670239a6d5fbbdd093ed4c78920c68b7d5e62e16512de8ac97dce401c1a9c6b7ec7754f0f997040eb21cb0745971aa981b13bf6fbc25ade1a113ab1d2eae7c6324f63880f06664f1f4",
+    "https://job-logs.eascdn.net/production/84263726-b5cc-41a3-930a-f508eced7351/1766045608691-33b33cab-53ff-4f19-9735-5a0b6562b49e.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20251218%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251218T124512Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=a9a8a83d928a2dd4a52bfecd20b1d4eb49e0249dd0a474e9ff398aaecc95740aef61412c93d71753d4364d94c5cb76fc32165ff18ba4710f6da9713b1d7f0d2f43a3474e2408eaa9caf7747192e8c2c6538fdd81e74737819c42cc110d897a107ae51791deb3651cdd8e373f7cf489153afd34e2e7f0617217cd51187af673575b78d21c5e273734a6f4f87bee8fe7893d7091dc570b8fc34b273d39ca75c664d4e2533f33a77b2dedde2d2ed5934228595db3ccd8da2edb270d91f2f52ba5bc61dba697c4c0f404600fbadf7646ac4a757bd604d7d2d2e9721d9a8a74260063bfd05a058cd6bf19c6eee1af9b8d025b9a82813141343575a7e7feece138f125",
+    "https://job-logs.eascdn.net/production/84263726-b5cc-41a3-930a-f508eced7351/1766045608897-a181ff29-bc15-4d02-a058-3dd6fb8a4503.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20251218%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251218T124512Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=002fa45da7d68624d80c09f8d5461765ec22b21ab7f8589e6c6f0e24c73086c8410052b148eb48a1dd6e1221fda097140333f7e9de138ae90ec5b3810caa8b9ce8043d4a3153670352a1312b95480f190b54d32db988d08efea78dd6737aea17ffa6a1d50f8dee038055269edc694410d22646522665b1e993c6aa7c1f5bc245206187c20a1174668d0f84518118e05e6670764930b9dffb314ad7d8fffc60c8c41640d32ef763b8ea599e779c336e9e7cb680626f661e216e150f8792be53bba439ea8e28c81d39c426e21e5335b96d205ecf84b59d7100395c7539a23a86d1e5facb21cb65e786a7ebaa90b352e3c9cb86aa2474b43fb32f9ee65cf54f6d74",
+    "https://job-logs.eascdn.net/production/84263726-b5cc-41a3-930a-f508eced7351/1766045609078-61d3e5d2-34a4-4c45-b8e0-b65e67538238.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20251218%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20251218T124512Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=41fd0994bc16dccecf60e9f64562732650d96937c0f0d1d3d8e52431126426a2af94f823d0676ed1856b193fc4f3733a87c3acb5850ca30cc6faf5d722096a6d48124b806d7ed53edb080a240fd5736d99b920cd4e868a6e02b4a19fa59b1bd3828c1bcab17b795882dbe525541c7aaad0ed3332b97ef5deaf548d9bbb84f15de0563277fd4aea378585fff32b4b129e00ae096da84778ab0014701bec2fa1e07bc238df3ed86aa0a691615b85a94841a34316f3a6c8fb7fc8e3429c569038a3a832a3a00eab22e8ccf31a7c84c104dc0af4564064ee0f06865d8ef532447e3fa150e201813c0db236787e367468f58219ff31f32a28d97e8143060ebf24a64b"
+  ],
+  "project": {
+    "id": "9f167fd4-b215-4ce9-a11d-6d3c7052ab92",
+    "name": "dropzy-app",
+    "slug": "dropzy-app",
+    "ownerAccount": {
+      "id": "8346b3dc-90f2-4194-88db-c947755bc13a",
+      "name": "sivrii1940"
+    }
+  },
+  "distribution": "INTERNAL",
+  "buildProfile": "preview",
+  "sdkVersion": "54.0.0",
+  "appVersion": "1.0.0",
+  "appBuildVersion": "1",
+  "gitCommitHash": "e92255a2c070c22117e81a03a126f7d573783110",
+  "gitCommitMessage": "Fix: Update API URL to dropzy.app",
+  "priority": "NORMAL",
+  "createdAt": "2025-12-18T08:13:19.681Z",
+  "updatedAt": "2025-12-18T08:19:34.052Z",
+  "completedAt": "2025-12-18T08:19:28.918Z",
+  "expirationDate": "2026-01-01T08:13:19.720Z",
+  "isForIosSimulator": false,
+  "metrics": {
+    "buildWaitTime": 211,
+    "buildQueueTime": 46700,
+    "buildDuration": 322012
+  }
+}

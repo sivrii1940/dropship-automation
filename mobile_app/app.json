@@ -41,8 +41,18 @@
         "projectId": "9f167fd4-b215-4ce9-a11d-6d3c7052ab92"
       }
     },
-    "privacy": "public",
-    "privacyPolicyUrl": "https://sivrii1940.github.io/dropship-automation/privacy-policy.html",
-    "termsOfServiceUrl": "https://sivrii1940.github.io/dropship-automation/terms-of-service.html"
+    "plugins": [
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0"
+          }
+        }
+      ]
+    ]
   }
 }

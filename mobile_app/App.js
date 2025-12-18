@@ -270,6 +270,7 @@ function MainNavigator({ onLogout }) {
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [needsApiSetup, setNeedsApiSetup] = useState(false);
   const isConnected = useNetwork();
 
   useEffect(() => {
@@ -339,6 +340,13 @@ export default function App() {
       // API servisinin init'i bekle
       await new Promise(resolve => setTimeout(resolve, 500));
       
+      // API URL ayarlanmış mı kontrol et
+      if (!api.baseUrl || api.baseUrl === '') {
+        setNeedsApiSetup(true);
+        setIsLoading(false);
+        return;
+      }
+      
       // Token var mı kontrol et
       if (api.token) {
         // Token geçerli mi kontrol et
@@ -373,6 +381,35 @@ export default function App() {
         <StatusBar style="light" />
         <ActivityIndicator size="large" color="#3b82f6" />
       </View>
+    );
+  }
+
+  const handleApiSetup = () => {
+    setNeedsApiSetup(false);
+    checkAuth();
+  };
+
+  // İlk kurulum ekranı - API URL ayarla
+  if (needsApiSetup) {
+    return (
+      <ErrorBoundary>
+        <View style={{ flex: 1 }}>
+          <NavigationContainer>
+            <StatusBar style="light" />
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="ApiSetup">
+                {(props) => (
+                  <ApiSettingsScreen 
+                    {...props} 
+                    isFirstSetup={true}
+                    onSetupComplete={handleApiSetup}
+                  />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </ErrorBoundary>
     );
   }
 

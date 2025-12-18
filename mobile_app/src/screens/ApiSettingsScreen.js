@@ -10,11 +10,11 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
 
-export default function ApiSettingsScreen({ navigation }) {
+export default function ApiSettingsScreen({ navigation, isFirstSetup = false, onSetupComplete }) {
   const [apiUrl, setApiUrl] = useState('');
 
   useEffect(() => {
-    setApiUrl(api.baseUrl);
+    setApiUrl(api.baseUrl || '');
   }, []);
 
   const saveApiUrl = async () => {
@@ -31,9 +31,16 @@ export default function ApiSettingsScreen({ navigation }) {
 
     try {
       await api.setApiUrl(apiUrl.trim());
-      Alert.alert('Başarılı', 'API URL kaydedildi', [
-        { text: 'Tamam', onPress: () => navigation.goBack() }
-      ]);
+      
+      if (isFirstSetup && onSetupComplete) {
+        Alert.alert('Başarılı', 'API URL kaydedildi. Şimdi giriş yapabilirsiniz.', [
+          { text: 'Devam', onPress: () => onSetupComplete() }
+        ]);
+      } else {
+        Alert.alert('Başarılı', 'API URL kaydedildi', [
+          { text: 'Tamam', onPress: () => navigation.goBack() }
+        ]);
+      }
     } catch (err) {
       Alert.alert('Hata', 'API URL kaydedilemedi');
     }
@@ -62,11 +69,15 @@ export default function ApiSettingsScreen({ navigation }) {
       Alert.alert('Hata', 'API sunucusuna bağlanılamadı.\n\n• URL doğru mu kontrol edin\n• Bilgisayar ve telefon aynı WiFi\'da mı?\n• API sunucusu çalışıyor mu?');
     }
   };
+            {isFirstSetup ? 'Hoş Geldiniz!' : 'API Sunucu Ayarları'}
+          </Text>
+        </View>
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.header}>
+        <Text style={styles.description}>
+          {isFirstSetup 
+            ? 'Başlamadan önce API sunucunuzun adresini ayarlayın. Backend uygulamanızın çalıştığı bilgisayarın IP adresini girin.'
+            : 'Mobil uygulamanın API sunucusuna bağlanması için bilgisayarınızın yerel IP adresini girin. Bilgisayar ve telefon aynı WiFi ağında olmalıdır.'
+          }
           <Ionicons name="server-outline" size={40} color="#3b82f6" />
           <Text style={styles.title}>API Sunucu Ayarları</Text>
         </View>
