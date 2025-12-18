@@ -103,6 +103,31 @@ app.include_router(webhook_router)
 security = HTTPBearer(auto_error=False)
 
 
+# ==================== ROOT ENDPOINT ====================
+
+@app.get("/")
+async def root():
+    """API Ana Sayfa"""
+    return {
+        "app": "Dropship Automation API",
+        "version": "1.0.0",
+        "status": "running",
+        "docs": "/docs",
+        "endpoints": {
+            "auth": "/api/auth/*",
+            "sellers": "/api/sellers",
+            "products": "/api/products",
+            "orders": "/api/orders",
+            "websocket": "/ws"
+        }
+    }
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+
+
 # ==================== WEBSOCKET ENDPOINT ====================
 
 @app.websocket("/ws")
