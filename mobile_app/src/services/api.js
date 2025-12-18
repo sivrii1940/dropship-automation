@@ -3,9 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CacheService from './CacheService';
 import NetworkService from './NetworkService';
 
-// API Base URL - Kullanıcı tarafından ayarlanmalı
-// Varsayılan olarak boş, ilk açılışta API URL sorulacak
-const DEFAULT_API_URL = '';
+// API Base URL - Production
+const DEFAULT_API_URL = 'https://dropzy.app';
 
 class ApiService {
   constructor() {

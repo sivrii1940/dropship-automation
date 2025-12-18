@@ -279,7 +279,7 @@ export default function App() {
     checkAuth();
     
     // WebSocket bağlantısını kur
-    const apiUrl = api.defaults.baseURL || 'http://localhost:8000';
+    const apiUrl = api.baseUrl || 'https://dropzy.app';
     websocketService.connect(apiUrl);
     
     // WebSocket event listeners
