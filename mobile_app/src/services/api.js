@@ -4,7 +4,7 @@ import CacheService from './CacheService';
 import NetworkService from './NetworkService';
 
 // API Base URL - Production
-const DEFAULT_API_URL = 'https://dolphin-app-jgjc5.ondigitalocean.app';
+const DEFAULT_API_URL = 'https://dropzy.app';
 
 class ApiService {
   constructor() {
