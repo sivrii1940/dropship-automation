@@ -1870,14 +1870,18 @@ async def stop_order_automation(current_user: dict = Depends(get_current_user)):
 # WEB FRONTEND - Static Files Serving
 # ============================================================================
 
+# Static files path (dynamic - works in any environment)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
 # Static files (CSS, JS, images)
-if os.path.exists("static"):
-    app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+if os.path.exists(STATIC_DIR):
+    app.mount("/assets", StaticFiles(directory=os.path.join(STATIC_DIR, "assets")), name="assets")
     
     @app.get("/")
     async def serve_root():
         """Ana sayfa - Web dashboard"""
-        return FileResponse("static/index.html")
+        return FileResponse(os.path.join(STATIC_DIR, "index.html"))
     
     @app.get("/{full_path:path}")
     async def serve_spa(full_path: str):
@@ -1887,12 +1891,12 @@ if os.path.exists("static"):
             raise HTTPException(status_code=404, detail="Not found")
         
         # Dosya varsa serve et
-        file_path = f"static/{full_path}"
+        file_path = os.path.join(STATIC_DIR, full_path)
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return FileResponse(file_path)
         
         # Yoksa index.html'i serve et (SPA routing için)
-        return FileResponse("static/index.html")
+        return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
 
 # Ana çalıştırma
