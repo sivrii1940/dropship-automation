@@ -69,6 +69,13 @@ export default function ApiSettingsScreen({ navigation, isFirstSetup = false, on
       Alert.alert('Hata', 'API sunucusuna bağlanılamadı.\n\n• URL doğru mu kontrol edin\n• Bilgisayar ve telefon aynı WiFi\'da mı?\n• API sunucusu çalışıyor mu?');
     }
   };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <View style={styles.header}>
+          <Ionicons name="server-outline" size={40} color="#3b82f6" />
+          <Text style={styles.title}>
             {isFirstSetup ? 'Hoş Geldiniz!' : 'API Sunucu Ayarları'}
           </Text>
         </View>
@@ -78,13 +85,6 @@ export default function ApiSettingsScreen({ navigation, isFirstSetup = false, on
             ? 'Başlamadan önce API sunucunuzun adresini ayarlayın. Backend uygulamanızın çalıştığı bilgisayarın IP adresini girin.'
             : 'Mobil uygulamanın API sunucusuna bağlanması için bilgisayarınızın yerel IP adresini girin. Bilgisayar ve telefon aynı WiFi ağında olmalıdır.'
           }
-          <Ionicons name="server-outline" size={40} color="#3b82f6" />
-          <Text style={styles.title}>API Sunucu Ayarları</Text>
-        </View>
-
-        <Text style={styles.description}>
-          Mobil uygulamanın API sunucusuna bağlanması için bilgisayarınızın 
-          yerel IP adresini girin. Bilgisayar ve telefon aynı WiFi ağında olmalıdır.
         </Text>
 
         <View style={styles.infoBox}>
