@@ -1,10 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Text, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+
+// Global error handler
+if (__DEV__) {
+  console.log('Development mode');
+} else {
+  // Production mode - catch all errors
+  ErrorUtils.setGlobalHandler((error, isFatal) => {
+    console.error('Global error:', error);
+    if (isFatal) {
+      Alert.alert(
+        'Beklenmeyen Hata',
+        'Uygulama yeniden başlatılacak',
+        [{
+          text: 'Tamam',
+          onPress: () => {
+            // RNRestart.Restart();
+          }
+        }]
+      );
+    }
+  });
+}
 
 // Auth Screens
 import LoginScreen from './src/screens/LoginScreen';
