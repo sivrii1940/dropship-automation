@@ -5,6 +5,8 @@ Mobil uygulama için backend API
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, Header, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 import uvicorn
@@ -12,6 +14,7 @@ import logging
 import asyncio
 from datetime import datetime
 from contextlib import asynccontextmanager
+import os
 
 from models import init_database, User, Seller, Product, Order, Settings, ActivityLog, ShopifyStore, Shipment
 from trendyol_scraper import get_scraper
@@ -1863,11 +1866,41 @@ async def stop_order_automation(current_user: dict = Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ============================================================================
+# WEB FRONTEND - Static Files Serving
+# ============================================================================
+
+# Static files (CSS, JS, images)
+if os.path.exists("static"):
+    app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+    
+    @app.get("/")
+    async def serve_root():
+        """Ana sayfa - Web dashboard"""
+        return FileResponse("static/index.html")
+    
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        """SPA routing - Tüm route'lar index.html'e yönlendirilir"""
+        # API route'larını atla
+        if full_path.startswith("api/") or full_path.startswith("ws"):
+            raise HTTPException(status_code=404, detail="Not found")
+        
+        # Dosya varsa serve et
+        file_path = f"static/{full_path}"
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        
+        # Yoksa index.html'i serve et (SPA routing için)
+        return FileResponse("static/index.html")
+
+
 # Ana çalıştırma
 if __name__ == "__main__":
     print("=" * 50)
-    print("Dropship Otomasyon API")
-    print("http://localhost:8000")
+    print("Dropship Otomasyon API + Web Dashboard")
+    print("Web: http://localhost:8000")
+    print("API: http://localhost:8000/api")
     print("API Docs: http://localhost:8000/docs")
     print("=" * 50)
     uvicorn.run(app, host="0.0.0.0", port=8000)
