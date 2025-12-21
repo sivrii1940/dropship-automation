@@ -23,13 +23,26 @@ export default function Login({ onLogin }) {
     setLoading(true);
     try {
       const response = await api.login(email.trim(), password);
+      console.log('✅ Login success:', response);
+      
       if (response.success) {
-        onLogin(response.data);
+        // Backend format: {success: true, data: {token, user_id, email, name}}
+        const userData = {
+          user: {
+            id: response.data.data?.user_id || response.data.user_id,
+            email: response.data.data?.email || response.data.email,
+            name: response.data.data?.name || response.data.name
+          },
+          access_token: response.data.data?.token || response.data.token
+        };
+        console.log('✅ Calling onLogin with:', userData);
+        onLogin(userData);
         navigate('/');
       } else {
         setError(response.error);
       }
     } catch (err) {
+      console.error('❌ Login error:', err);
       setError('Giriş yapılamadı. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);

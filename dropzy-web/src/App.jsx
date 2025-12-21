@@ -36,8 +36,17 @@ function App() {
   }, []);
 
   const handleLogin = (userData) => {
-    setUser(userData.user);
-    websocket.connect(userData.access_token);
+    console.log('✅ handleLogin called with:', userData);
+    
+    // userData format: {user: {id, email, name}, access_token: "..."}
+    if (userData.user) {
+      setUser(userData.user);
+      localStorage.setItem('user', JSON.stringify(userData.user));
+    }
+    
+    if (userData.access_token) {
+      websocket.connect(userData.access_token);
+    }
   };
 
   const handleLogout = () => {
