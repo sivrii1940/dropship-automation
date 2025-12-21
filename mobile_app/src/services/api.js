@@ -20,21 +20,7 @@ class ApiService {
   }
 
   async init() {
-    const savedUrl = await AsyncStorage.getItem('api_url');
-    if (savedUrl) {
-      this.baseUrl = savedUrl;
-    } else {
-      // Try https first, fallback to http if needed
-      try {
-        const response = await axios.get(DEFAULT_API_URL + '/auth/check', { timeout: 3000 });
-        this.baseUrl = DEFAULT_API_URL;
-      } catch (error) {
-        console.log('HTTPS failed, trying HTTP...');
-        this.baseUrl = FALLBACK_API_URL;
-      }
-    }
-    
-    // Kayıtlı token ve kullanıcı bilgilerini yükle
+    // Kayıtlı token ve kullanıcı bilgilerini önce yükle
     const savedToken = await AsyncStorage.getItem('auth_token');
     const savedUser = await AsyncStorage.getItem('user_data');
     if (savedToken) {
@@ -43,8 +29,39 @@ class ApiService {
     if (savedUser) {
       try {
         this.user = JSON.parse(savedUser);
-      } catch (e) {}
+      } catch (e) {
+        console.error('User data parse error:', e);
+      }
     }
+
+    // API URL'sini kontrol et
+    const savedUrl = await AsyncStorage.getItem('api_url');
+    if (savedUrl) {
+      this.baseUrl = savedUrl;
+    } else {
+      // Try https first, fallback to http if needed
+      try {
+        const response = await axios.get(DEFAULT_API_URL + '/health', { timeout: 3000 });
+        if (response.data?.status === 'healthy') {
+          this.baseUrl = DEFAULT_API_URL;
+          await AsyncStorage.setItem('api_url', DEFAULT_API_URL);
+        }
+      } catch (error) {
+        console.log('HTTPS failed, trying HTTP...');
+        try {
+          const response = await axios.get(FALLBACK_API_URL + '/health', { timeout: 3000 });
+          if (response.data?.status === 'healthy') {
+            this.baseUrl = FALLBACK_API_URL;
+            await AsyncStorage.setItem('api_url', FALLBACK_API_URL);
+          }
+        } catch (e) {
+          console.error('Both HTTPS and HTTP failed:', e);
+          this.baseUrl = DEFAULT_API_URL; // Default olarak HTTPS kullan
+        }
+      }
+    }
+
+    console.log('API initialized:', this.baseUrl, 'Token:', this.token ? 'exists' : 'none');
   }
 
   async setApiUrl(url) {
@@ -255,7 +272,7 @@ class ApiService {
   
   async register(email, password, name = null) {
     const response = await this.request('POST', '/api/auth/register', { email, password, name }, false);
-    if (response.success && response.data.token) {
+    if (response.data && response.data.token) {
       await this.setAuthToken(response.data.token, {
         user_id: response.data.user_id,
         email: response.data.email,
@@ -267,10 +284,15 @@ class ApiService {
 
   async login(email, password) {
     const response = await this.request('POST', '/api/auth/login', { email, password }, false);
-    if (response.success && response.data.token) {
+    if (response.data && response.data.token) {
       await this.setAuthToken(response.data.token, {
         user_id: response.data.user_id,
         email: response.data.email,
+        name: response.data.name
+      });
+    }
+    return response;
+  }
         name: response.data.name
       });
     }
