@@ -51,14 +51,14 @@ git reset --hard origin/main
 git pull origin main
 ```
 
-### Static files görünmüyorsa:
-```bash
-# Dizin kontrol
-ls -la static/
+### ✅ Web Dashboard Düzeltmesi Yapıldı!
+**Tarih:** 21 Aralık 2025
 
-# Yoksa manuel kopyala
-# dropzy-static.zip dosyasını kullan
-```
+Web arayüzü dosyaları artık GitHub'da! 
+- ✅ `dropship_app/static/index.html`
+- ✅ `dropship_app/static/assets/` (CSS, JS)
+
+Sadece `git pull origin main` çalıştırın, web arayüzü hazır olacak!
 
 ---
 
