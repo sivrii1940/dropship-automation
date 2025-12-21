@@ -5,8 +5,8 @@ import NetworkService from './NetworkService';
 
 // API Base URL - Production
 // Try both http and https, prioritize https
-const DEFAULT_API_URL = 'https://dropzy.app/api';
-const FALLBACK_API_URL = 'http://dropzy.app/api';
+const DEFAULT_API_URL = 'https://dropzy.app';
+const FALLBACK_API_URL = 'http://dropzy.app';
 
 class ApiService {
   constructor() {
