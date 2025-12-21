@@ -38,30 +38,40 @@ class ApiService {
     const savedUrl = await AsyncStorage.getItem('api_url');
     if (savedUrl) {
       this.baseUrl = savedUrl;
+      console.log('✅ Using saved API URL:', savedUrl);
     } else {
       // Try https first, fallback to http if needed
+      console.log('🔍 Testing API connection...');
       try {
-        const response = await axios.get(DEFAULT_API_URL + '/health', { timeout: 3000 });
+        console.log('📡 Trying HTTPS:', DEFAULT_API_URL + '/health');
+        const response = await axios.get(DEFAULT_API_URL + '/health', { timeout: 5000 });
+        console.log('✅ HTTPS response:', response.data);
         if (response.data?.status === 'healthy') {
           this.baseUrl = DEFAULT_API_URL;
           await AsyncStorage.setItem('api_url', DEFAULT_API_URL);
+          console.log('✅ HTTPS working, saved URL');
         }
       } catch (error) {
-        console.log('HTTPS failed, trying HTTP...');
+        console.log('❌ HTTPS failed:', error.message);
+        console.log('📡 Trying HTTP fallback...');
         try {
-          const response = await axios.get(FALLBACK_API_URL + '/health', { timeout: 3000 });
+          console.log('📡 Trying HTTP:', FALLBACK_API_URL + '/health');
+          const response = await axios.get(FALLBACK_API_URL + '/health', { timeout: 5000 });
+          console.log('✅ HTTP response:', response.data);
           if (response.data?.status === 'healthy') {
             this.baseUrl = FALLBACK_API_URL;
             await AsyncStorage.setItem('api_url', FALLBACK_API_URL);
+            console.log('✅ HTTP working, saved URL');
           }
         } catch (e) {
-          console.error('Both HTTPS and HTTP failed:', e);
+          console.error('❌ Both HTTPS and HTTP failed:', e.message);
+          console.log('⚠️ Using default HTTPS anyway');
           this.baseUrl = DEFAULT_API_URL; // Default olarak HTTPS kullan
         }
       }
     }
 
-    console.log('API initialized:', this.baseUrl, 'Token:', this.token ? 'exists' : 'none');
+    console.log('🚀 API initialized:', this.baseUrl, '| Token:', this.token ? '✅ exists' : '❌ none');
   }
 
   async setApiUrl(url) {
@@ -186,6 +196,9 @@ class ApiService {
         // Auth token ekle (eğer gerekli ve varsa)
         if (requiresAuth && this.token) {
           config.headers['Authorization'] = `Bearer ${this.token}`;
+          console.log(`🔑 Request with auth: ${method} ${endpoint}`);
+        } else {
+          console.log(`📡 Request: ${method} ${endpoint}`);
         }
 
         if (data) {
@@ -198,6 +211,8 @@ class ApiService {
 
         const response = await axios(config);
         
+        console.log(`✅ Response: ${method} ${endpoint}`, response.status);
+        
         // GET istekleri için response'u cache'le
         if (method === 'GET' && useCache && this.useCache && response.data) {
           await CacheService.set(cacheKey, response.data);
@@ -206,7 +221,8 @@ class ApiService {
         return response.data;
       });
     } catch (error) {
-      console.error('API Error:', error);
+      console.error('❌ API Error:', error.message);
+      console.error('Full error:', error.response?.status, error.response?.data);
       
       // 401 hatası: token geçersiz veya süresi dolmuş
       if (error.response?.status === 401) {
