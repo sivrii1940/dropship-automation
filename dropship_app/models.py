@@ -335,7 +335,17 @@ class User:
     @staticmethod
     def validate_token(token):
         """Token doğrula ve kullanıcı bilgisi döndür"""
+        import logging
+        logger = logging.getLogger(__name__)
+        
+        logger.info(f"🔍 Validating token: {token[:20]}...")
+        
         conn = get_db_connection()
+        
+        # Önce token sessions'da var mı kontrol et
+        all_sessions = conn.execute('SELECT token, user_id, expires_at FROM sessions').fetchall()
+        logger.info(f"📊 Total sessions in DB: {len(all_sessions)}")
+        
         session = conn.execute('''
             SELECT s.user_id, s.expires_at, u.email, u.name, u.is_active
             FROM sessions s
@@ -345,14 +355,20 @@ class User:
         conn.close()
         
         if not session:
+            logger.warning(f"❌ Token not found in database or user inactive")
             return None
         
         # Token süresi kontrolü
         expires_at = datetime.fromisoformat(session['expires_at'])
-        if datetime.now() > expires_at:
+        now = datetime.now()
+        logger.info(f"⏰ Token expires at: {expires_at}, now: {now}")
+        
+        if now > expires_at:
+            logger.warning(f"❌ Token expired")
             User.delete_session(token)
             return None
         
+        logger.info(f"✅ Token valid for user: {session['email']}")
         return {
             'user_id': session['user_id'],
             'email': session['email'],
