@@ -109,12 +109,23 @@ export default function Dashboard() {
 
   const fetchDashboard = async () => {
     try {
+      // Check if token exists before making request
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('⚠️ No token found, skipping dashboard fetch');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('📊 Fetching dashboard data...');
       const response = await api.getDashboard();
+      console.log('✅ Dashboard response:', response);
+      
       if (response.success) {
         setDashboardData(response.data);
       }
     } catch (err) {
-      console.error('Dashboard fetch error:', err);
+      console.error('❌ Dashboard fetch error:', err);
     } finally {
       setLoading(false);
       setRefreshing(false);

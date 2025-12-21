@@ -17,6 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('🔍 App init - checking authentication...');
     // Check if user is logged in
     const token = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
@@ -26,7 +27,7 @@ function App() {
     
     if (token && savedUser) {
       try {
-        // CRITICAL: Set token to API headers
+        // CRITICAL: Set token to API headers FIRST
         api.setToken(token);
         console.log('✅ Token set to API');
         
@@ -39,10 +40,16 @@ function App() {
       } catch (error) {
         console.error('❌ Error parsing user data:', error);
         api.clearToken();
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
       }
     }
     
-    setLoading(false);
+    // Small delay to ensure token is set before rendering pages
+    setTimeout(() => {
+      setLoading(false);
+      console.log('✅ App initialization complete');
+    }, 150);
   }, []);
 
   const handleLogin = (userData) => {
