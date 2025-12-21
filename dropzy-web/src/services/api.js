@@ -34,21 +34,50 @@ class ApiService {
   async login(email, password) {
     try {
       const response = await this.client.post('/api/auth/login', { email, password });
-      if (response.data.access_token) {
-        this.setToken(response.data.access_token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+      console.log('✅ Login response:', response.data);
+      
+      // Backend format: {success: true, data: {token, user_id, email, name}}
+      if (response.data.success && response.data.data?.token) {
+        this.setToken(response.data.data.token);
+        localStorage.setItem('user', JSON.stringify({
+          id: response.data.data.user_id,
+          email: response.data.data.email,
+          name: response.data.data.name
+        }));
+      } else if (response.data.token) {
+        // Direct token response
+        this.setToken(response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data));
       }
       return { success: true, data: response.data };
     } catch (error) {
+      console.error('❌ Login error:', error.response?.data);
       return { success: false, error: error.response?.data?.detail || 'Giriş başarısız' };
     }
   }
 
   async register(username, email, password) {
     try {
-      const response = await this.client.post('/api/auth/register', { username, email, password });
+      // Backend expects: {email, password, name}
+      const response = await this.client.post('/api/auth/register', { 
+        email, 
+        password, 
+        name: username 
+      });
+      console.log('✅ Register response:', response.data);
+      
+      // Backend format: {success: true, data: {token, user_id, email, name}}
+      if (response.data.success && response.data.data?.token) {
+        this.setToken(response.data.data.token);
+        localStorage.setItem('user', JSON.stringify({
+          id: response.data.data.user_id,
+          email: response.data.data.email,
+          name: response.data.data.name
+        }));
+      }
       return { success: true, data: response.data };
     } catch (error) {
+      console.error('❌ Register error:', error.response?.data);
       return { success: false, error: error.response?.data?.detail || 'Kayıt başarısız' };
     }
   }
