@@ -4,7 +4,9 @@ import CacheService from './CacheService';
 import NetworkService from './NetworkService';
 
 // API Base URL - Production
-const DEFAULT_API_URL = 'https://dropzy.app';
+// Try both http and https, prioritize https
+const DEFAULT_API_URL = 'https://dropzy.app/api';
+const FALLBACK_API_URL = 'http://dropzy.app/api';
 
 class ApiService {
   constructor() {
@@ -21,6 +23,15 @@ class ApiService {
     const savedUrl = await AsyncStorage.getItem('api_url');
     if (savedUrl) {
       this.baseUrl = savedUrl;
+    } else {
+      // Try https first, fallback to http if needed
+      try {
+        const response = await axios.get(DEFAULT_API_URL + '/auth/check', { timeout: 3000 });
+        this.baseUrl = DEFAULT_API_URL;
+      } catch (error) {
+        console.log('HTTPS failed, trying HTTP...');
+        this.baseUrl = FALLBACK_API_URL;
+      }
     }
     
     // Kayıtlı token ve kullanıcı bilgilerini yükle
