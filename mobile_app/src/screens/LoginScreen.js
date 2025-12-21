@@ -30,15 +30,21 @@ export default function LoginScreen({ navigation, onLogin }) {
       setLoading(true);
       const response = await api.login(email.trim(), password);
       
-      if (response.success) {
+      console.log('✅ Login response:', response);
+      
+      if (response.success || response.data) {
+        // Token API service'de zaten kaydedildi
+        console.log('✅ Login successful, navigating to dashboard');
         Alert.alert('Başarılı', 'Giriş yapıldı!');
-        onLogin(response.data);
+        // onLogin callback'i navigation'ı tetikler
+        onLogin(response.data || response);
       } else {
-        Alert.alert('Hata', response.error || 'Giriş başarısız');
+        Alert.alert('Hata', response.message || response.error || 'Giriş başarısız');
       }
     } catch (err) {
-      console.error('Login error:', err);
-      Alert.alert('Hata', err.response?.data?.detail || 'Giriş yapılamadı');
+      console.error('❌ Login error:', err);
+      const errorMsg = err.response?.data?.detail || err.message || 'Giriş yapılamadı';
+      Alert.alert('Hata', errorMsg);
     } finally {
       setLoading(false);
     }

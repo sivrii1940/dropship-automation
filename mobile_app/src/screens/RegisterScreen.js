@@ -50,15 +50,21 @@ export default function RegisterScreen({ navigation, onRegister }) {
       setLoading(true);
       const response = await api.register(email.trim(), password, name.trim() || null);
       
-      if (response.success) {
+      console.log('✅ Register response:', response);
+      
+      if (response.success || response.data) {
+        // Token API service'de zaten kaydedildi
+        console.log('✅ Registration successful, navigating to dashboard');
         Alert.alert('Başarılı', 'Hesabınız oluşturuldu!');
-        onRegister(response.data);
+        // onRegister callback'i navigation'ı tetikler
+        onRegister(response.data || response);
       } else {
-        Alert.alert('Hata', response.error || 'Kayıt başarısız');
+        Alert.alert('Hata', response.message || response.error || 'Kayıt başarısız');
       }
     } catch (err) {
-      console.error('Register error:', err);
-      Alert.alert('Hata', err.response?.data?.detail || 'Kayıt yapılamadı');
+      console.error('❌ Register error:', err);
+      const errorMsg = err.response?.data?.detail || err.message || 'Kayıt yapılamadı';
+      Alert.alert('Hata', errorMsg);
     } finally {
       setLoading(false);
     }
