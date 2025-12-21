@@ -103,6 +103,9 @@ init_database()
 # Webhook router'ını ekle
 app.include_router(webhook_router)
 
+# Static files (Web Dashboard)
+app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+
 # Security
 security = HTTPBearer(auto_error=False)
 
@@ -111,20 +114,8 @@ security = HTTPBearer(auto_error=False)
 
 @app.get("/")
 async def root():
-    """API Ana Sayfa"""
-    return {
-        "app": "Dropship Automation API",
-        "version": "1.0.0",
-        "status": "running",
-        "docs": "/docs",
-        "endpoints": {
-            "auth": "/api/auth/*",
-            "sellers": "/api/sellers",
-            "products": "/api/products",
-            "orders": "/api/orders",
-            "websocket": "/ws"
-        }
-    }
+    """Web Dashboard Ana Sayfa - React SPA"""
+    return FileResponse('static/index.html')
 
 @app.get("/health")
 async def health_check():
