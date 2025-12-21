@@ -11,10 +11,15 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease"
+        "gradleCommand": ":app:assembleRelease",
+        "withoutCredentials": true
       },
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "EXPO_NO_CAPABILITY_SYNC": "1"
+      },
+      "cache": {
+        "disabled": false
       }
     },
     "production": {

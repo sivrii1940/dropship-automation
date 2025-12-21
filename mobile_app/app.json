@@ -51,7 +51,10 @@
             "targetSdkVersion": 34,
             "buildToolsVersion": "34.0.0",
             "enableProguardInReleaseBuilds": false,
-            "enableShrinkResourcesInReleaseBuilds": false
+            "enableShrinkResourcesInReleaseBuilds": false,
+            "usesCleartextTraffic": true,
+            "minSdkVersion": 24,
+            "newArchEnabled": false
           }
         }
       ]

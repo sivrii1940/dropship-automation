@@ -1,0 +1,12 @@
+# Default ignored files
+gradle/
+build/
+.gradle/
+local.properties
+*.iml
+.idea/
+*.hprof
+.cxx/
+*.apk
+*.ap_
+*.aab
