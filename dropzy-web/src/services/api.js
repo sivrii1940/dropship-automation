@@ -91,8 +91,13 @@ class ApiService {
   async getDashboard() {
     try {
       const response = await this.client.get('/api/dashboard');
-      return { success: true, data: response.data };
+      console.log('✅ Dashboard response:', response.data);
+      return { 
+        success: true, 
+        data: response.data.data || response.data || {} 
+      };
     } catch (error) {
+      console.error('❌ Dashboard error:', error.response?.data);
       return { success: false, error: error.response?.data?.detail || 'Dashboard yüklenemedi' };
     }
   }
@@ -101,8 +106,13 @@ class ApiService {
   async getProducts(page = 1, limit = 20) {
     try {
       const response = await this.client.get(`/api/products?page=${page}&limit=${limit}`);
-      return { success: true, data: response.data };
+      console.log('✅ Products response:', response.data);
+      return { 
+        success: true, 
+        data: response.data.data || response.data || [] 
+      };
     } catch (error) {
+      console.error('❌ Products error:', error.response?.data);
       return { success: false, error: error.response?.data?.detail || 'Ürünler yüklenemedi' };
     }
   }
@@ -140,8 +150,13 @@ class ApiService {
       let url = `/api/orders?page=${page}&limit=${limit}`;
       if (status) url += `&status=${status}`;
       const response = await this.client.get(url);
-      return { success: true, data: response.data };
+      console.log('✅ Orders response:', response.data);
+      return { 
+        success: true, 
+        data: response.data.data || response.data || [] 
+      };
     } catch (error) {
+      console.error('❌ Orders error:', error.response?.data);
       return { success: false, error: error.response?.data?.detail || 'Siparişler yüklenemedi' };
     }
   }
@@ -168,8 +183,14 @@ class ApiService {
   async getSellers() {
     try {
       const response = await this.client.get('/api/sellers');
-      return { success: true, data: response.data };
+      console.log('✅ Sellers response:', response.data);
+      // Backend format: {success: true, data: [...]}
+      return { 
+        success: true, 
+        data: response.data.data || response.data || [] 
+      };
     } catch (error) {
+      console.error('❌ Sellers error:', error.response?.data);
       return { success: false, error: error.response?.data?.detail || 'Satıcılar yüklenemedi' };
     }
   }
