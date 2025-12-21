@@ -309,11 +309,6 @@ class ApiService {
     }
     return response;
   }
-        name: response.data.name
-      });
-    }
-    return response;
-  }
 
   async logout() {
     try {
