@@ -1,4 +1,4 @@
-import { io } from 'socket.io-client';
+// Native WebSocket service for real-time updates
 
 class WebSocketService {
   constructor() {
@@ -6,76 +6,83 @@ class WebSocketService {
     this.listeners = new Map();
     this.reconnectAttempts = 0;
     this.maxReconnectAttempts = 5;
+    this.reconnectTimeout = null;
   }
 
   connect(token) {
-    if (this.socket?.connected) {
+    if (this.socket?.readyState === WebSocket.OPEN) {
       return;
     }
 
-    const wsUrl = 'wss://dropzy.app';
+    const wsUrl = 'wss://dropzy.app/ws';
     
-    this.socket = io(wsUrl, {
-      transports: ['websocket'],
-      auth: {
-        token: token
-      },
-      reconnection: true,
-      reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
-      reconnectionAttempts: this.maxReconnectAttempts,
-    });
+    try {
+      this.socket = new WebSocket(wsUrl);
 
-    this.socket.on('connect', () => {
-      console.log('WebSocket connected');
-      this.reconnectAttempts = 0;
-      this.emit('connection_status', { connected: true });
-    });
+      this.socket.onopen = () => {
+        console.log('✅ WebSocket connected');
+        this.reconnectAttempts = 0;
+        this.emit('connection_status', { connected: true });
+      };
 
-    this.socket.on('disconnect', (reason) => {
-      console.log('WebSocket disconnected:', reason);
-      this.emit('connection_status', { connected: false, reason });
-    });
+      this.socket.onclose = (event) => {
+        console.log('❌ WebSocket disconnected:', event.code, event.reason);
+        this.emit('connection_status', { connected: false, reason: event.reason });
+        
+        // Auto reconnect
+        if (this.reconnectAttempts < this.maxReconnectAttempts) {
+          this.reconnectAttempts++;
+          const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 5000);
+          console.log(`🔄 Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts})...`);
+          this.reconnectTimeout = setTimeout(() => this.connect(token), delay);
+        }
+      };
 
-    this.socket.on('connect_error', (error) => {
-      console.error('WebSocket connection error:', error);
-      this.reconnectAttempts++;
-      
-      if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+      this.socket.onerror = (error) => {
+        console.error('❌ WebSocket error:', error);
         this.emit('connection_error', { 
-          error: 'Maximum reconnection attempts reached',
+          error: 'WebSocket connection failed',
           attempts: this.reconnectAttempts 
         });
-      }
-    });
+      };
 
-    // Real-time event listeners
-    this.socket.on('order_update', (data) => {
-      this.emit('order_update', data);
-    });
-
-    this.socket.on('product_update', (data) => {
-      this.emit('product_update', data);
-    });
-
-    this.socket.on('stock_update', (data) => {
-      this.emit('stock_update', data);
-    });
-
-    this.socket.on('notification', (data) => {
-      this.emit('notification', data);
-    });
-
-    this.socket.on('seller_update', (data) => {
-      this.emit('seller_update', data);
-    });
+      this.socket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          console.log('📨 WebSocket message:', data);
+          
+          // Emit event to listeners
+          if (data.type) {
+            this.emit(data.type, data);
+          }
+        } catch (err) {
+          console.error('Failed to parse WebSocket message:', err);
+        }
+      };
+    } catch (error) {
+      console.error('Failed to create WebSocket:', error);
+      this.emit('connection_error', { error: error.message });
+    }
   }
 
   disconnect() {
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+    
     if (this.socket) {
-      this.socket.disconnect();
+      this.socket.close();
       this.socket = null;
       this.listeners.clear();
+    }
+  }
+
+  send(data) {
+    if (this.socket?.readyState === WebSocket.OPEN) {
+      this.socket.send(JSON.stringify(data));
+    } else {
+      console.warn('WebSocket not connected, cannot send:', data);
     }
   }
 
@@ -108,16 +115,8 @@ class WebSocketService {
     }
   }
 
-  send(event, data) {
-    if (this.socket?.connected) {
-      this.socket.emit(event, data);
-    } else {
-      console.warn('WebSocket not connected, cannot send:', event);
-    }
-  }
-
   isConnected() {
-    return this.socket?.connected || false;
+    return this.socket?.readyState === WebSocket.OPEN;
   }
 }
 
