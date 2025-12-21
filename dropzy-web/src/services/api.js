@@ -21,6 +21,7 @@ class ApiService {
     this.token = token;
     this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     localStorage.setItem('token', token);
+    console.log('🔑 Token set to API headers:', token.substring(0, 20) + '...');
   }
 
   clearToken() {

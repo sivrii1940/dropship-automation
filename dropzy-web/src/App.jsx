@@ -52,10 +52,16 @@ function App() {
     if (userData.user) {
       setUser(userData.user);
       localStorage.setItem('user', JSON.stringify(userData.user));
+      console.log('✅ User saved to localStorage');
     }
     
     if (userData.access_token) {
+      // CRITICAL: Set token to API service
+      api.setToken(userData.access_token);
+      console.log('✅ Token set to API service from handleLogin');
+      
       websocket.connect(userData.access_token);
+      console.log('✅ WebSocket connecting');
     }
   };
 
